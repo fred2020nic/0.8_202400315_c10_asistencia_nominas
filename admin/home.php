@@ -19,7 +19,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Panel de Control
+        Panel de Control 2024 - 2025
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
