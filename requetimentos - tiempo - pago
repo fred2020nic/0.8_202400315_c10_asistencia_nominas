@@ -1,0 +1,9 @@
+pues quiero un sistema de nominas con control de asistencia así como se muestra en un video de Mauricio, donde se genera las nominas de los empleados al momento de estar ingresando en el sistema por medio de su asistencia,
+lo nuevo que se debe implementar es que cuando se ingresa el empleado ya no sera a mano, si no que se generara en el mismo sistema una targeta para los empleados que tendra su qr en la cual servira para que lo lea un lector y asi
+se guarde en la base de datos lo que esta entrando en su respectivo horario de entrada y salidad,  asi se sabra si cumple su horario de trabajo para se genera su nomina.
+igual si se puede recalcar en el sistema si algun empleado tiene retardos o faltas.
+otro punto a ver es sobre el horario de comida quiero que igual se refregle en la nomina y el sistema.
+
+
+pago 40 dolares
+fecha entrega 25-4-2023
