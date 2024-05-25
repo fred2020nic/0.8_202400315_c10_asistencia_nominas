@@ -94,12 +94,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="extras" class="col-sm-3 control-label">Horas Extras</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="extras" name="extras">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="photo" class="col-sm-3 control-label">Foto</label>
 
                     <div class="col-sm-9">
                       <input type="file" name="photo" id="photo">
                     </div>
                 </div>
+               
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
@@ -189,6 +197,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="edit_extras" class="col-sm-3 control-label">Horas Extras</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_extras" name="extras">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="edit_schedule" class="col-sm-3 control-label">Horario</label>
 
                     <div class="col-sm-9">
@@ -206,6 +221,7 @@
                       </select>
                     </div>
                 </div>
+               
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>

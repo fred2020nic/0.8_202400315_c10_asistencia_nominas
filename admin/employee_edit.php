@@ -10,9 +10,12 @@
 		$contact = $_POST['contact'];
 		$gender = $_POST['gender'];
 		$position = $_POST['position'];
-		$schedule = $_POST['schedule'];
 		
-		$sql = "UPDATE employees SET firstname = '$firstname', lastname = '$lastname', address = '$address', birthdate = '$birthdate', contact_info = '$contact', gender = '$gender', position_id = '$position', schedule_id = '$schedule' WHERE id = '$empid'";
+
+		$schedule = $_POST['schedule'];
+		$extras = $_POST['extras'];
+		
+		$sql = "UPDATE employees SET firstname = '$firstname', lastname = '$lastname', address = '$address', birthdate = '$birthdate', contact_info = '$contact', gender = '$gender', position_id = '$position', schedule_id = '$schedule', extras = '$extras' WHERE id = '$empid'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Empleado actualizado con éxito';
 		}
