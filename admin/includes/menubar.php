@@ -38,6 +38,7 @@
         <li class="header">IMPRIMIBLES</li>
         <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Nómina</span></a></li>
         <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Horarios</span></a></li>
+        <li><a href="festivo.php"><i class="fa fa-clock-o"></i> <span>Festivos</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

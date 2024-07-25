@@ -62,6 +62,9 @@
                   </thead>
                   <tbody>
                     <?php
+                    // $timezone = 'America/Bogota';
+                    // date_default_timezone_set('Asia/Shanghai');
+                
                     $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {

@@ -3,7 +3,7 @@ if (isset($_POST['employee'])) {
 	$output = array('error' => false);
 
 	include 'conn.php';
-	include 'timezone.php';
+	include './timezone.php';
 
 	$employee = $_POST['employee'];
 	$status = $_POST['status'];
@@ -14,8 +14,12 @@ if (isset($_POST['employee'])) {
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
 		$id = $row['id'];
+		
+		// $timezone = 'America/Bogota';
+		// date_default_timezone_set($timezone);
 
-		$date_now = date('Y-m-d');
+		$date_now = 'America/Managua';
+		date_default_timezone_set($date_now);
 
 		if ($status == 'in') {
 			$sql = "SELECT * FROM attendance WHERE employee_id = '$id' AND date = '$date_now' AND time_in IS NOT NULL";
