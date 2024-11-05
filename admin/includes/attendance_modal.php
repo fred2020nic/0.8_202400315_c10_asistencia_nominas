@@ -51,6 +51,28 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<label for="lunch_out" class="col-sm-3 control-label">Hora Comida Out</label>
+
+						<div class="col-sm-9">
+							<div class="bootstrap-timepicker">
+								<input type="text" class="form-control timepicker" id="lunch_out" name="lunch_out">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lunch_in" class="col-sm-3 control-label">Hora Comida In</label>
+
+						<div class="col-sm-9">
+							<div class="bootstrap-timepicker">
+								<input type="text" class="form-control timepicker" id="lunch_in" name="lunch_in">
+							</div>
+						</div>
+					</div>
+
+
 					<div class="form-group">
 						<label for="time_out" class="col-sm-3 control-label">Hora de Salida</label>
 
@@ -97,6 +119,26 @@
 						<div class="col-sm-9">
 							<div class="bootstrap-timepicker">
 								<input type="text" class="form-control timepicker" id="edit_time_in" name="edit_time_in">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="edit_lunch_out" class="col-sm-3 control-label">Hora Comida Out</label>
+
+						<div class="col-sm-9">
+							<div class="bootstrap-timepicker">
+								<input type="text" class="form-control timepicker" id="edit_lunch_out" name="edit_lunch_out">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="edit_lunch_in" class="col-sm-3 control-label">Hora Comida In</label>
+
+						<div class="col-sm-9">
+							<div class="bootstrap-timepicker">
+								<input type="text" class="form-control timepicker" id="edit_lunch_in" name="edit_lunch_in">
 							</div>
 						</div>
 					</div>

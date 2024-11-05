@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 15-02-2024 a las 19:24:51
--- Versión del servidor: 10.11.6-MariaDB-cll-lve
--- Versión de PHP: 7.2.34
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 09-08-2024 a las 00:13:25
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `u895241130_mx7_vf`
+-- Base de datos: `0.9_20240801_m20_asistencia_nominas`
 --
 
 -- --------------------------------------------------------
@@ -77,7 +77,14 @@ INSERT INTO `attendance` (`id`, `employee_id`, `date`, `time_in`, `status`, `tim
 (183, 48, '2024-02-09', '15:08:20', 0, '15:53:32', 0.75),
 (184, 46, '2024-02-09', '15:23:27', 0, '00:00:00', 0),
 (185, 47, '2024-02-09', '15:23:34', 0, '00:00:00', 0),
-(186, 46, '2024-02-15', '06:38:26', 1, '00:00:00', 0);
+(186, 46, '2024-02-15', '06:38:26', 1, '00:00:00', 0),
+(187, 49, '2024-05-27', '08:00:00', 1, '17:00:00', 9),
+(188, 49, '2024-05-28', '08:00:00', 1, '17:00:00', 9),
+(189, 49, '2024-05-29', '08:00:00', 1, '17:00:00', 9),
+(190, 49, '2024-05-30', '08:00:00', 1, '17:00:00', 9),
+(191, 49, '2024-05-31', '08:00:00', 1, '17:00:00', 9),
+(192, 49, '2024-07-24', '11:11:00', 0, '23:00:00', 5.8166666666667),
+(193, 49, '0000-00-00', '14:42:42', 0, '00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -137,6 +144,7 @@ CREATE TABLE `employees` (
   `gender` varchar(10) NOT NULL,
   `position_id` int(11) NOT NULL,
   `schedule_id` int(11) NOT NULL,
+  `extras` decimal(8,2) NOT NULL,
   `photo` varchar(200) NOT NULL,
   `created_on` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -145,10 +153,48 @@ CREATE TABLE `employees` (
 -- Volcado de datos para la tabla `employees`
 --
 
-INSERT INTO `employees` (`id`, `employee_id`, `firstname`, `lastname`, `address`, `birthdate`, `contact_info`, `gender`, `position_id`, `schedule_id`, `photo`, `created_on`) VALUES
-(46, 'EZL513876940', 'Carlos', 'Rojas', 'tttttt', '2024-01-31', '', 'Male', 19, 13, 'MEDICINAS.jpg', '2023-12-07'),
-(47, 'JOR703184652', 'Ana Maria', 'Orozco Rojas', 'Cra 17 No. 12-64', '1984-12-04', '3119001752', 'Female', 16, 11, 'Scrat.jpg', '2024-01-20'),
-(48, 'LEG157290864', 'EDUARDO', 'GARCIA CASTREJON', 'Emiliano Zapata no 24\r\n', '1994-02-06', '', 'Male', 15, 13, '', '2024-02-02');
+INSERT INTO `employees` (`id`, `employee_id`, `firstname`, `lastname`, `address`, `birthdate`, `contact_info`, `gender`, `position_id`, `schedule_id`, `extras`, `photo`, `created_on`) VALUES
+(46, 'EZL513876940', 'Carlos', 'Rojas', 'tttttt', '2024-01-31', '', 'Male', 19, 13, '900.00', 'MEDICINAS.jpg', '2023-12-07'),
+(47, 'JOR703184652', 'Ana Maria - edit', 'Orozco Rojas', 'Cra 17 No. 12-64', '1984-12-04', '3119001752', 'Female', 16, 11, '1000.00', 'Scrat.jpg', '2024-01-20'),
+(48, 'LEG157290864', 'EDUARDO', 'GARCIA CASTREJON', 'Emiliano Zapata no 24\r\n', '1994-02-06', '', 'Male', 15, 13, '0.00', '', '2024-02-02'),
+(49, 'AFM401257986', 'Juan ', 'Perez', 'Esteli', '2024-05-06', 'asdas', 'Male', 15, 14, '200.00', 'descarga.jpeg', '2024-05-25');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `festivos`
+--
+
+CREATE TABLE `festivos` (
+  `id` int(11) NOT NULL,
+  `holiday_date` date NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `festivos`
+--
+
+INSERT INTO `festivos` (`id`, `holiday_date`, `description`) VALUES
+(1, '2024-07-24', 'Año Nuevo'),
+(2, '0000-00-00', 'Reyes Magos'),
+(3, '0000-00-00', 'Día de San José'),
+(4, '0000-00-00', 'Jueves Santo'),
+(5, '2024-03-29', 'Viernes Santo'),
+(6, '2024-05-01', 'Día del Trabajo'),
+(7, '2024-05-13', 'Ascensión de Jesús'),
+(8, '2024-06-03', 'Corpus Christi'),
+(9, '2024-06-10', 'Sagrado Corazón de Jesús'),
+(10, '2024-07-01', 'San Pedro y San Pablo'),
+(11, '2024-07-20', 'Día de la Independencia'),
+(12, '2024-08-07', 'Batalla de Boyacá'),
+(13, '2024-08-19', 'Asunción de la Virgen'),
+(14, '2024-10-14', 'Día de la Raza'),
+(15, '2024-11-04', 'Todos los Santos'),
+(16, '2024-11-11', 'Independencia de Cartagena'),
+(17, '2024-12-08', 'Inmaculada Concepción'),
+(18, '2024-12-25', 'Navidad'),
+(20, '2024-07-31', 'prueba dos editada');
 
 -- --------------------------------------------------------
 
@@ -190,7 +236,7 @@ CREATE TABLE `position` (
 --
 
 INSERT INTO `position` (`id`, `description`, `rate`) VALUES
-(15, 'Obrero medio', 2000),
+(15, 'Obrero medio', 20),
 (16, 'Secretaria', 40000),
 (17, 'Director', 254800),
 (18, 'Subdirector', 244800),
@@ -218,7 +264,55 @@ INSERT INTO `schedules` (`id`, `time_in`, `time_out`) VALUES
 (10, '06:00:00', '21:00:00'),
 (11, '07:00:00', '17:00:00'),
 (12, '00:45:00', '17:45:00'),
-(13, '08:00:00', '18:00:00');
+(13, '08:00:00', '18:00:00'),
+(14, '08:00:00', '17:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudpermiso`
+--
+
+CREATE TABLE `solicitudpermiso` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `fecha_solicitud` date NOT NULL,
+  `tipo_permiso` varchar(255) NOT NULL,
+  `motivo` varchar(255) NOT NULL,
+  `observaciones` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudpermiso`
+--
+
+INSERT INTO `solicitudpermiso` (`id`, `employee_id`, `fecha_solicitud`, `tipo_permiso`, `motivo`, `observaciones`) VALUES
+(1, 46, '2024-08-08', 'prueba tipo', 'asd', 'asd'),
+(2, 49, '2024-08-08', 'ada', 'ad', 'asd');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vacacion`
+--
+
+CREATE TABLE `vacacion` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `fecha_solicitud` date NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `fecha_regreso` date NOT NULL,
+  `estado` enum('pendiente','aprobado','rechazado') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vacacion`
+--
+
+INSERT INTO `vacacion` (`id`, `employee_id`, `fecha_solicitud`, `fecha_inicio`, `fecha_fin`, `fecha_regreso`, `estado`) VALUES
+(1, 46, '2024-08-08', '2024-08-08', '2024-08-09', '2024-08-10', 'pendiente'),
+(2, 47, '2024-08-08', '2024-08-09', '2024-08-09', '2024-08-10', 'pendiente');
 
 --
 -- Índices para tablas volcadas
@@ -255,6 +349,12 @@ ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `festivos`
+--
+ALTER TABLE `festivos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `overtime`
 --
 ALTER TABLE `overtime`
@@ -273,6 +373,20 @@ ALTER TABLE `schedules`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `solicitudpermiso`
+--
+ALTER TABLE `solicitudpermiso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
+
+--
+-- Indices de la tabla `vacacion`
+--
+ALTER TABLE `vacacion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -286,7 +400,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 
 --
 -- AUTO_INCREMENT de la tabla `cashadvance`
@@ -298,13 +412,19 @@ ALTER TABLE `cashadvance`
 -- AUTO_INCREMENT de la tabla `deductions`
 --
 ALTER TABLE `deductions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT de la tabla `festivos`
+--
+ALTER TABLE `festivos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `overtime`
@@ -322,7 +442,35 @@ ALTER TABLE `position`
 -- AUTO_INCREMENT de la tabla `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitudpermiso`
+--
+ALTER TABLE `solicitudpermiso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `vacacion`
+--
+ALTER TABLE `vacacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `solicitudpermiso`
+--
+ALTER TABLE `solicitudpermiso`
+  ADD CONSTRAINT `solicitudpermiso_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`);
+
+--
+-- Filtros para la tabla `vacacion`
+--
+ALTER TABLE `vacacion`
+  ADD CONSTRAINT `vacacion_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

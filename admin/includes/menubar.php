@@ -30,6 +30,8 @@
             <li><a href="employee.php"><i class="fa fa-circle-o"></i> Lista de Empleados</a></li>
             <li><a href="overtime.php"><i class="fa fa-circle-o"></i> Tiempo Extra</a></li>
             <li><a href="cashadvance.php"><i class="fa fa-circle-o"></i> Adelanto en Efectivo</a></li>
+            <li><a href="permiso.php"><i class="fa fa-circle-o"></i> Solicitud de Permiso</a></li>
+            <li><a href="vacacion.php"><i class="fa fa-circle-o"></i> Solicitud de Vacaciones</a></li>
             <li><a href="schedule.php"><i class="fa fa-circle-o"></i> Horarios</a></li>
           </ul>
         </li>
@@ -37,6 +39,14 @@
         <li><a href="position.php"><i class="fa fa-suitcase"></i> Cargos</a></li>
         <li class="header">IMPRIMIBLES</li>
         <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Nómina</span></a></li>
+        <li><a href="chequeador.php"><i class="fa fa-files-o"></i> <span>Cheaqueador</span></a></li>
+        <li><a href="ocurrencia.php"><i class="fa fa-files-o"></i> <span>Ocurrencias</span></a></li>
+
+        <li><a href="bono.php"><i class="fa fa-files-o"></i> <span>Bonos</span></a></li>
+        <li><a href="propinas.php"><i class="fa fa-files-o"></i> <span>Propinas</span></a></li>
+        <li><a href="cosiones.php"><i class="fa fa-files-o"></i> <span>Comisiones</span></a></li>
+        <li><a href="deducciones.php"><i class="fa fa-file-text"></i> Deducciones</a></li>
+        <li><a href="liquidaciones.php"><i class="fa fa-file-text"></i> Liquidaciones</a></li>
         <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Horarios</span></a></li>
         <li><a href="festivo.php"><i class="fa fa-clock-o"></i> <span>Festivos</span></a></li>
       </ul>

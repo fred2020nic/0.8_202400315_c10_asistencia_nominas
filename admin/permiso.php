@@ -12,11 +12,12 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Asistencia
+          Solicitud de Permiso
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-          <li class="active">Asistencia</li>
+          <li>Empleados</li>
+          <li class="active">Solicitud de Permiso</li>
         </ol>
       </section>
       <!-- Main content -->
@@ -36,7 +37,7 @@
           echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-check'></i>¡Proceso Exitoso!</h4>
+              <h4><i class='icon fa fa-check'></i> Éxito!</h4>
               " . $_SESSION['success'] . "
             </div>
           ";
@@ -53,47 +54,27 @@
                 <table id="example1" class="table table-bordered">
                   <thead>
                     <th class="hidden"></th>
-                    <th>Fecha</th>
+                    <th>Fecha de Solicitud</th>
                     <th>ID Empleado</th>
                     <th>Nombre</th>
-                    <th>Hora Entrada</th>
-                    <th>Hora Comida Out</th>
-                    <th>Hora Comida In</th>
-                    <th>Hora Salida</th>
+                    <th>Tipo de Permiso</th>
                     <th>Acción</th>
                   </thead>
                   <tbody>
                     <?php
-                    // $timezone = 'America/Bogota';
-                    // date_default_timezone_set('Asia/Shanghai');
-                
-                    $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
+                    $sql = "SELECT *, solicitudpermiso.id AS spid, employees.employee_id AS empid FROM solicitudpermiso LEFT JOIN employees ON employees.id=solicitudpermiso.employee_id ORDER BY fecha_solicitud DESC";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
-                      $status = ($row['status']) ? '<span class="label label-warning pull-right">a tiempo</span>' : '<span class="label label-danger pull-right">tarde</span>';
-                      // Calcular diferencia entre comida out e in
-                        $lunchOut = new DateTime($row['lunch_out']);
-                        $lunchIn = new DateTime($row['lunch_in']);
-                        $interval = $lunchOut->diff($lunchIn);
-                        
-                        // Verificar si la diferencia es mayor a una hora
-                        $exceso = '';
-                        if ($interval->h > 1 || ($interval->h == 1 && $interval->i > 0)) {
-                            $exceso = '<span class="label label-danger">Exceso</span>';
-                        }
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>" . date('M d, Y', strtotime($row['date'])) . "</td>
+                          <td>" . date('M d, Y', strtotime($row['fecha_solicitud'])) . "</td>
                           <td>" . $row['empid'] . "</td>
                           <td>" . $row['firstname'] . ' ' . $row['lastname'] . "</td>
-                          <td>" . date('h:i A', strtotime($row['time_in'])) . $status . "</td>
-                          <td>" . date('h:i A', strtotime($row['lunch_out'])) . "</td>
-                          <td>" . date('h:i A', strtotime($row['lunch_in'])) . " $exceso</td>
-                          <td>" . date('h:i A', strtotime($row['time_out'])) . "</td>
+                          <td>" . $row['tipo_permiso'] . "</td>
                           <td>
-                            <button class='btn btn-success btn-sm btn-flat edit' data-id='" . $row['attid'] . "'><i class='fa fa-edit'></i> Editar</button>
-                            <button class='btn btn-danger btn-sm btn-flat delete' data-id='" . $row['attid'] . "'><i class='fa fa-trash'></i> Eliminar</button>
+                            <button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['spid'] . "'><i class='fa fa-edit'></i> Editar</button>
+                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['spid'] . "'><i class='fa fa-trash'></i> Eliminar</button>
                           </td>
                         </tr>
                       ";
@@ -109,7 +90,7 @@
     </div>
 
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/attendance_modal.php'; ?>
+    <?php include 'includes/permiso_modal.php'; ?>
   </div>
   <?php include 'includes/scripts.php'; ?>
   <script>
@@ -129,33 +110,22 @@
       });
     });
 
-    $('#empleados').change(function(e) {
-      e.preventDefault();
-      id = $(this).val();
-      $("#employee").val(id);
-    });
-
     function getRow(id) {
       $.ajax({
         type: 'POST',
-        url: 'attendance_row.php',
+        url: 'permiso_row.php',
         data: {
           id: id
         },
         dataType: 'json',
         success: function(response) {
-          $('#datepicker_edit').val(response.date);
-          $('#attendance_date').html(response.date);
-          $('#edit_time_in').val(response.time_in);
-
-          $('#edit_lunch_out').val(response.lunch_out);
-          $('#edit_lunch_in').val(response.lunch_in);
-
-          $('#edit_time_out').val(response.time_out);
-          $('#attid').val(response.attid);
-          $('#employee_name').html(response.firstname + ' ' + response.lastname);
-          $('#del_attid').val(response.attid);
-          $('#del_employee_name').html(response.firstname + ' ' + response.lastname);
+          console.log(response);
+          $('.fecha').html(response.fecha_solicitud);
+          $('.employee_name').html(response.firstname + ' ' + response.lastname);
+          $('.spid').val(response.spid);
+          $('#edit_tipo_permiso').val(response.tipo_permiso);
+          $('#edit_motivo').val(response.motivo);
+          $('#edit_observaciones').val(response.observaciones);
         }
       });
     }

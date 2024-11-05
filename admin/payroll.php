@@ -14,40 +14,161 @@ if (isset($_GET['range'])) {
     $from = date('Y-m-d', strtotime('-30 day', strtotime($to)));
 }
 
-// Consulta SQL para verificar si el día de asistencia es un día festivo
+// Consulta SQL modificada para incluir los nuevos campos y agrupar por empleado
 $sql = "
+SELECT 
+    e.id AS employee_id,
+    CONCAT(e.firstname, ' ', e.lastname) AS nombre_empleado,
+    p.rate AS salario_hr,
+    e.extras AS horas_contrato,
+    IFNULL(att.total_hours, 0) AS total_hours,
+    IFNULL(att.valor_festivo, 0) AS valor_festivo,
+    IFNULL(ot.total_hours, 0) AS horas_extras,
+    IFNULL(p.rate * 1.5, 0) AS valor_hora_extra,
+    IFNULL(att.gross, 0) AS gross,
+    IFNULL(ot.monto_horas_extra, 0) AS monto_horas_extra,
+    IFNULL(prop.total_propinas, 0) AS propina,
+    IFNULL(bono.total_bonos, 0) AS bonos,
+    IFNULL(prestamo.total_prestamos, 0) AS prestamos,
+    IFNULL(comision.total_comisiones, 0) AS comisiones,
+    0 AS horas_festivas,         -- Sin datos específicos
+    0 AS domingo,                -- Sin datos específicos
+    0 AS horas_dominicales,      -- Sin datos específicos
+    0 AS vacaciones,             -- Sin datos específicos
+    (
+        IFNULL(att.gross, 0) +
+        IFNULL(ot.monto_horas_extra, 0) +
+        IFNULL(prop.total_propinas, 0) +
+        IFNULL(bono.total_bonos, 0) +
+        IFNULL(comision.total_comisiones, 0) +
+        IFNULL(att.valor_festivo, 0)
+    ) AS devengado,
+    IFNULL(deducciones.total_deducciones, 0) AS total_deducciones,
+    (
+        (
+            IFNULL(att.gross, 0) +
+            IFNULL(ot.monto_horas_extra, 0) +
+            IFNULL(prop.total_propinas, 0) +
+            IFNULL(bono.total_bonos, 0) +
+            IFNULL(comision.total_comisiones, 0) +
+            IFNULL(att.valor_festivo, 0)
+        ) - 
+        IFNULL(deducciones.total_deducciones, 0)
+    ) AS neto,
+    (
+        IFNULL(att.gross, 0) +
+        IFNULL(ot.monto_horas_extra, 0) +
+        IFNULL(prop.total_propinas, 0) +
+        IFNULL(bono.total_bonos, 0) +
+        IFNULL(comision.total_comisiones, 0) +
+        IFNULL(att.valor_festivo, 0)
+    ) AS importe_total
+FROM 
+    employees e
+LEFT JOIN 
+    position p ON p.id = e.position_id
+LEFT JOIN (
     SELECT 
-        a.id, 
-        a.employee_id, 
-        a.date, 
-        a.time_in, 
-        a.status, 
-        a.time_out, 
-        a.num_hr,
-        e.firstname, 
-        e.lastname, 
-        p.rate, 
-        e.extras,
-        CASE 
-            WHEN f.holiday_date IS NOT NULL AND a.date <> '0000-00-00' THEN 1 
-            ELSE 0 
-        END AS is_holiday
+        a.employee_id,
+        SUM(a.num_hr) AS total_hours,
+        SUM(a.num_hr * p.rate * 0.1) AS valor_festivo,
+        SUM(a.num_hr * p.rate) AS gross
     FROM 
         attendance a
-    LEFT JOIN 
+    JOIN 
+        employees emp ON emp.id = a.employee_id
+    JOIN 
+        position p ON p.id = emp.position_id
+    JOIN 
         festivos f ON a.date = f.holiday_date
-    LEFT JOIN 
-        employees e ON e.id = a.employee_id
-    LEFT JOIN 
-        position p ON p.id = e.position_id
     WHERE 
         a.date BETWEEN '$from' AND '$to'
-    ORDER BY 
-        e.lastname ASC, e.firstname ASC
+    GROUP BY 
+        a.employee_id
+) att ON att.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(hours) AS total_hours,
+        SUM(hours * rate * 1.5) AS monto_horas_extra
+    FROM 
+        overtime
+    WHERE 
+        date_overtime BETWEEN '$from' AND '$to'
+    GROUP BY 
+        employee_id
+) ot ON ot.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(monto) AS total_propinas
+    FROM 
+        propinas
+    WHERE 
+        date BETWEEN '$from' AND '$to' AND status = 1
+    GROUP BY 
+        employee_id
+) prop ON prop.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(monto) AS total_bonos
+    FROM 
+        bono
+    WHERE 
+        date BETWEEN '$from' AND '$to' AND status = 1
+    GROUP BY 
+        employee_id
+) bono ON bono.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(amount) AS total_prestamos
+    FROM 
+        cashadvance
+    WHERE 
+        date_advance BETWEEN '$from' AND '$to'
+    GROUP BY 
+        employee_id
+) prestamo ON prestamo.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(monto) AS total_comisiones
+    FROM 
+        cosiones
+    WHERE 
+        date BETWEEN '$from' AND '$to' AND status = 1
+    GROUP BY 
+        employee_id
+) comision ON comision.employee_id = e.id
+LEFT JOIN (
+    SELECT 
+        employee_id,
+        SUM(monto) AS total_deducciones
+    FROM 
+        deducciones
+    WHERE 
+        date BETWEEN '$from' AND '$to' AND status = 1
+    GROUP BY 
+        employee_id
+) deducciones ON deducciones.employee_id = e.id
+WHERE 
+    e.status = 1
+ORDER BY 
+    e.lastname ASC, e.firstname ASC
 ";
 
 $query = $conn->query($sql);
+
+if (!$query) {
+    echo "Error en la consulta SQL: " . $conn->error;
+    exit;
+}
 ?>
+
+<!-- Resto del código HTML y PHP -->
+
 
 <!-- Incluye el encabezado y la navegación -->
 <?php include 'includes/header.php'; ?>
@@ -104,72 +225,78 @@ $query = $conn->query($sql);
               </div>
             </div>
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th>Nombre Empleado</th>
-                  <th>ID Empleado</th>
-                  <th>Total horas</th>
-                  <th>Valor Festivo</th>
-                  <th>Horas contrato</th>
-                  <th>Gross</th>
-                  <th>Valor por Hora</th>
-                  <th>Hras Extras</th>
-                  <th>Valor por Hora Extra</th>
-                  <th>Monto Horas Extra</th>
-                  <th>Pago Neto</th>
-                </thead>
-                <tbody>
-                  <?php
-                  $sql_deductions = "SELECT *, SUM(amount) as total_amount FROM deductions";
-                  $query_deductions = $conn->query($sql_deductions);
-                  $drow = $query_deductions->fetch_assoc();
-                  $deduction = $drow['total_amount'];
-
-                  while ($row = $query->fetch_assoc()) {
-                    $empid = $row['employee_id'];
-                    $tot_hrs = $row['num_hr'];
-                    $extras = $row['extras'];
-                    $salario_hr = $row['rate'];
-                    $gross = $salario_hr * $tot_hrs;
-                    $is_holiday = $row['is_holiday'];
-                    $valor_festivo = $is_holiday ? $salario_hr * 0.1 : 0;
-
-                    $casql = "SELECT *, SUM(amount) AS cashamount FROM cashadvance WHERE employee_id='$empid' AND date_advance BETWEEN '$from' AND '$to'";
-                    $caquery = $conn->query($casql);
-                    $carow = $caquery->fetch_assoc();
-                    $cashadvance = $carow['cashamount'];
-
-                    $oveql = "SELECT rate, SUM(hours) AS horas FROM overtime WHERE employee_id='$empid' AND date_overtime BETWEEN '$from' AND '$to'";
-                    $ovequery = $conn->query($oveql);
-                    $over = $ovequery->fetch_assoc();
-
-                    $overtime = $over['horas'];
-                    $rate_ove = $over['rate'];
-
-                    $cantidad_hroas_extras = ($extras / 4) - $tot_hrs;
-                    $valor_extra = ($row['rate'] * 1.5) * $cantidad_hroas_extras;
-                    $total_deduction = $deduction + $cashadvance;
-                    $net = $gross + ($rate_ove * $overtime * $row['rate']) - $total_deduction + $valor_extra + $valor_festivo;
-
-                    echo "
-                      <tr>
-                        <td>" . $row['lastname'] . ", " . $row['firstname'] . "</td>
-                        <td>" . $row['employee_id'] . "</td>
-                        <td>" . number_format($tot_hrs, 2) . "</td>
-                        <td>" . number_format($valor_festivo, 2) . "</td>
-                        <td>" . number_format($extras, 2) . "</td>
-                        <td>" . number_format($gross, 2) . "</td>
-                        <td>" . number_format($salario_hr, 2) . "</td>
-                        <td>" . number_format($extras, 2) . "</td>
-                        <td>" . number_format($salario_hr * 1.5, 2) . "</td>
-                        <td>" . number_format($valor_extra, 2) . "</td>
-                        <td>" . number_format($net, 2) . "</td>
-                      </tr>
-                    ";
-                  }
-                  ?>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;"> <!-- Barra de desplazamiento horizontal -->
+                <table id="example1" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>ID Empleado</th>
+                      <th>Nombre Empleado</th>
+                      <th>Salario por Hora</th>
+                      <th>Horas Contrato</th>
+                      <th>Total Horas</th>
+                      <th>Valor Festivo</th>
+                      <th>Horas Extras</th>
+                      <th>Valor por Hora Extra</th>
+                      <th>Gross</th>
+                      <th>Monto Horas Extra</th>
+                      <th>Propina</th>
+                      <th>Bonos</th>
+                      <th>Préstamos</th>
+                      <th>Comisiones</th>
+                      <th>Horas Festivas</th>
+                      <th>Domingo</th>
+                      <th>Horas Dominicales</th>
+                      <th>Vacaciones</th>
+                      <th>Devengado</th>
+                      <th>Base ISPT</th>
+                      <th>Retenciones</th>
+                      <th>ISR</th>
+                      <th>IMSS</th>
+                      <th>PTU</th>
+                      <th>Importe Total</th>
+                      <th>Total Deducciones</th>
+                      <th>Pago Neto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    while ($row = $query->fetch_assoc()) {
+                        echo "
+                            <tr>
+                                <td>" . htmlspecialchars($row['employee_id']) . "</td>
+                                <td>" . htmlspecialchars($row['nombre_empleado']) . "</td>
+                                <td>" . number_format($row['salario_hr'], 2) . "</td>
+                                <td>" . number_format($row['horas_contrato'], 2) . "</td>
+                                <td>" . number_format($row['total_hours'], 2) . "</td>
+                                <td>" . number_format($row['valor_festivo'], 2) . "</td>
+                                <td>" . number_format($row['horas_extras'], 2) . "</td>
+                                <td>" . number_format($row['valor_hora_extra'], 2) . "</td>
+                                <td>" . number_format($row['gross'], 2) . "</td>
+                                <td>" . number_format($row['monto_horas_extra'], 2) . "</td>
+                                <td>" . number_format($row['propina'], 2) . "</td>
+                                <td>" . number_format($row['bonos'], 2) . "</td>
+                                <td>" . number_format($row['prestamos'], 2) . "</td>
+                                <td>" . number_format($row['comisiones'], 2) . "</td>
+                                <td>0.00</td> <!-- Horas Festivas -->
+                                <td>0.00</td> <!-- Domingo -->
+                                <td>0.00</td> <!-- Horas Dominicales -->
+                                <td>0.00</td> <!-- Vacaciones -->
+                                <td>" . number_format($row['devengado'], 2) . "</td>
+                                <td>0.00</td> <!-- Base ISPT -->
+                                <td>0.00</td> <!-- Retenciones -->
+                                <td>0.00</td> <!-- ISR -->
+                                <td>0.00</td> <!-- IMSS -->
+                                <td>0.00</td> <!-- PTU -->
+                                <td>" . number_format($row['importe_total'], 2) . "</td>
+                                <td>" . number_format($row['total_deducciones'], 2) . "</td>
+                                <td>" . number_format($row['neto'], 2) . "</td>
+                            </tr>
+                        ";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

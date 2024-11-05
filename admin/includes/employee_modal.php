@@ -31,6 +31,27 @@
                   	</div>
                 </div>
                 <div class="form-group">
+                  	<label for="domicilio" class="col-sm-3 control-label">Domicilio</label>
+
+                  	<div class="col-sm-9">
+                      <textarea class="form-control" name="domicilio" id="domicilio"></textarea>
+                  	</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="colonia" class="col-sm-3 control-label">Colonia</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="colonia" id="colonia">
+                    </div>
+
+                    <label for="cp" class="col-sm-3 control-label">CP</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="cp" id="cp">
+                    </div>
+                </div>
+
+                
+                <div class="form-group">
                   	<label for="datepicker_add" class="col-sm-3 control-label">Fecha de Nacimiento</label>
 
                   	<div class="col-sm-9"> 
@@ -39,6 +60,54 @@
                       </div>
                   	</div>
                 </div>
+
+                <div class="form-group">
+                  	<label for="fecha_ingreso" class="col-sm-3 control-label">Fecha de Ingreso</label>
+
+                  	<div class="col-sm-9"> 
+                      <div class="date">
+                        <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
+                      </div>
+                  	</div>
+                </div>
+
+                <div class="form-group">
+                  	<label for="fecha_alta_imss" class="col-sm-3 control-label">Fecha de IMSS</label>
+
+                  	<div class="col-sm-9"> 
+                      <div class="date">
+                        <input type="date" class="form-control" id="fecha_alta_imss" name="fecha_alta_imss">
+                      </div>
+                  	</div>
+                </div>
+
+                
+
+                 <!-- New Row with Four Fields -->
+                 <div class="form-group">
+                    <label for="curp" class="col-sm-3 control-label">CURP</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="curp" id="curp">
+                    </div>
+
+                    <label for="rfc" class="col-sm-3 control-label">RFC</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="rfc" id="rfc">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nss" class="col-sm-3 control-label">NSS</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="nss" id="nss">
+                    </div>
+
+                    <label for="tipo_sangre" class="col-sm-3 control-label">Tipo de Sangre</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tipo_sangre" id="tipo_sangre">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="contact" class="col-sm-3 control-label">Información de Contacto</label>
 
@@ -46,8 +115,35 @@
                       <input type="text" class="form-control" id="contact" name="contact">
                     </div>
                 </div>
+
+
                 <div class="form-group">
-                    <label for="gender" class="col-sm-3 control-label">Género</label>
+                    <label for="tel_emergencia_1" class="col-sm-3 control-label">Telefono 1</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tel_emergencia_1" id="tel_emergencia_1">
+                    </div>
+
+                    <label for="parentesco_1" class="col-sm-3 control-label">Parentesco 1</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="parentesco_1" id="parentesco_1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tel_emergencia_2" class="col-sm-3 control-label">Telefono 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tel_emergencia_2" id="tel_emergencia_2">
+                    </div>
+
+                    <label for="parentesco_2" class="col-sm-3 control-label">Parentesco 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="parentesco_2" id="parentesco_2">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="gender" class="col-sm-3 control-label">Sexo</label>
 
                     <div class="col-sm-9"> 
                       <select class="form-control" name="gender" id="gender" required>
@@ -151,6 +247,28 @@
                       <textarea class="form-control" name="address" id="edit_address"></textarea>
                     </div>
                 </div>
+
+                <div class="form-group">
+                  	<label for="edit_domicilio" class="col-sm-3 control-label">Domicilio</label>
+
+                  	<div class="col-sm-9">
+                      <textarea class="form-control" name="domicilio" id="edit_domicilio"></textarea>
+                  	</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_colonia" class="col-sm-3 control-label">Colonia</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="colonia" id="edit_colonia">
+                    </div>
+
+                    <label for="edit_cp" class="col-sm-3 control-label">CP</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="cp" id="edit_cp">
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <label for="datepicker_edit" class="col-sm-3 control-label">Fecha de Nacimiento</label>
 
@@ -160,6 +278,57 @@
                       </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                  	<label for="fecha_ingreso" class="col-sm-3 control-label">Fecha de Ingreso</label>
+
+                  	<div class="col-sm-9"> 
+                      <div class="date">
+                        <input type="date" class="form-control" id="edit_fecha_ingreso" name="fecha_ingreso">
+                      </div>
+                  	</div>
+                </div>
+
+                <div class="form-group">
+                  	<label for="edit_fecha_alta_imss" class="col-sm-3 control-label">Fecha de IMSS</label>
+
+                  	<div class="col-sm-9"> 
+                      <div class="date">
+                        <input type="date" class="form-control" id="edit_fecha_alta_imss" name="fecha_alta_imss">
+                      </div>
+                  	</div>
+                </div>
+
+                
+
+                 <!-- New Row with Four Fields -->
+                 <div class="form-group">
+                    <label for="edit_curp" class="col-sm-3 control-label">CURP</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="curp" id="edit_curp">
+                    </div>
+
+                    <label for="edit_rfc" class="col-sm-3 control-label">RFC</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="rfc" id="edit_rfc">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_nss" class="col-sm-3 control-label">NSS</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="nss" id="edit_nss">
+                    </div>
+
+                    <label for="edit_tipo_sangre" class="col-sm-3 control-label">Tipo de Sangre</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tipo_sangre" id="edit_tipo_sangre">
+                    </div>
+                </div>
+
+
+
+
                 <div class="form-group">
                     <label for="edit_contact" class="col-sm-3 control-label">Información de Contacto</label>
 
@@ -167,6 +336,32 @@
                       <input type="text" class="form-control" id="edit_contact" name="contact">
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="edit_tel_emergencia_1" class="col-sm-3 control-label">Telefono 1</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tel_emergencia_1" id="edit_tel_emergencia_1">
+                    </div>
+
+                    <label for="edit_parentesco_1" class="col-sm-3 control-label">Parentesco 1</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="parentesco_1" id="edit_parentesco_1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_tel_emergencia_2" class="col-sm-3 control-label">Telefono 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="tel_emergencia_2" id="edit_tel_emergencia_2">
+                    </div>
+
+                    <label for="edit_parentesco_2" class="col-sm-3 control-label">Parentesco 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="" name="parentesco_2" id="edit_parentesco_2">
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <label for="edit_gender" class="col-sm-3 control-label">Género</label>
 

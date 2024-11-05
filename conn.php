@@ -5,7 +5,7 @@ $host = $_SERVER['HTTP_HOST'];
 
 if ($host === 'localhost') {
 
-	$conn = new mysqli("localhost", "root", "", 'c10_asistencia_nom');
+	$conn = new mysqli("localhost", "root", "", '0.9_20240801_m20_asistencia_nominas_f2');
 
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);

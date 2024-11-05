@@ -6,6 +6,13 @@ if (isset($_POST['add'])) {
 	$date = $_POST['date'];
 	$time_in = $_POST['time_in'];
 	$time_in = date('H:i:s', strtotime($time_in));
+
+	$lunch_out = $_POST['lunch_out'];
+	$lunch_out = date('H:i:s', strtotime($lunch_out));
+
+	$lunch_in = $_POST['lunch_in'];
+	$lunch_in = date('H:i:s', strtotime($lunch_in));
+
 	$time_out = $_POST['time_out'];
 	$time_out = date('H:i:s', strtotime($time_out));
 
@@ -31,7 +38,7 @@ if (isset($_POST['add'])) {
 			$scherow = $squery->fetch_assoc();
 			$logstatus = ($time_in > $scherow['time_in']) ? 0 : 1;
 			//
-			$sql = "INSERT INTO attendance (employee_id, date, time_in, time_out, status) VALUES ('$emp', '$date', '$time_in', '$time_out', '$logstatus')";
+			$sql = "INSERT INTO attendance (employee_id, date, time_in, lunch_out, lunch_in, time_out, status) VALUES ('$emp', '$date', '$time_in', '$lunch_out', '$lunch_in', '$time_out', '$logstatus')";
 			if ($conn->query($sql)) {
 				$_SESSION['success'] = 'Attendance added successfully';
 				$id = $conn->insert_id;
@@ -49,6 +56,10 @@ if (isset($_POST['add'])) {
 					} */
 
 				$time_in = new DateTime($time_in);
+
+				$lunch_out = new DateTime($lunch_out);
+				$lunch_in = new DateTime($lunch_in);
+
 				$time_out = new DateTime($time_out);
 				$interval = $time_in->diff($time_out);
 				$hrs = $interval->format('%h');

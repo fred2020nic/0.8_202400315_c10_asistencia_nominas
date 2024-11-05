@@ -18,15 +18,24 @@
     </div>
 
     <div class="login-box-body">
-      <h4 class="login-box-msg">Ingrese su ID de Empleado</h4>
+      <h4 class="login-box-msg">Ingrese su ID de Empleado 24</h4>
 
       <form id="attendance">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <select class="form-control" name="status">
             <option value="in">Hora de Entrada</option>
             <option value="out">Hora de Salida</option>
           </select>
+        </div> -->
+        <div class="form-group">
+          <select class="form-control" name="status">
+            <option value="in">Hora de Entrada</option>
+            <option value="out">Hora de Salida</option>
+            <option value="lunch_out">Hora de Salida a Comer</option>
+            <option value="lunch_in">Hora de Entrada de Comer</option>
+          </select>
         </div>
+
         <div class="form-group has-feedback">
           <input type="text" class="form-control input-lg" id="employee" name="employee" required>
           <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
